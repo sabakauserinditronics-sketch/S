@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm Sorry - From Saba 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s, transform 1s;
+        }
+
+        .page.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #764ba2;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .content {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content-box {
+                padding: 30px 20px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            .content {
+                font-size: 1em;
+                line-height: 1.6;
+            }
+
+            .character-container {
+                height: 200px;
+                gap: 50px;
+                margin: 20px 0;
+            }
+
+            .head {
+                width: 60px;
+                height: 60px;
+            }
+
+            .hair {
+                width: 70px;
+                height: 40px;
+            }
+
+            .girl .hair {
+                height: 45px;
+            }
+
+            .girl .hair::after,
+            .girl .hair::before {
+                width: 30px;
+                height: 60px;
+            }
+
+            .body {
+                width: 45px;
+                height: 60px;
+            }
+
+            .arm {
+                width: 12px;
+                height: 45px;
+            }
+
+            .page-indicator {
+                top: 10px;
+                right: 10px;
+                font-size: 1em;
+                padding: 8px 15px;
+            }
+
+            .nav-buttons {
+                bottom: 15px;
+                gap: 10px;
+            }
+
+            button {
+                padding: 12px 20px;
+                font-size: 0.9em;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .memory-slot {
+                height: 120px;
+            }
+
+            .upload-text {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-box {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .content {
+                font-size: 0.95em;
+            }
+
+            .character-container {
+                height: 180px;
+                gap: 30px;
+            }
+
+            .head {
+                width: 50px;
+                height: 50px;
+            }
+
+            .hair {
+                width: 60px;
+                height: 35px;
+            }
+
+            .girl .hair {
+                height: 40px;
+            }
+
+            .girl .hair::after,
+            .girl .hair::before {
+                width: 25px;
+                height: 50px;
+            }
+
+            .body {
+                width: 38px;
+                height: 50px;
+            }
+
+            .arm {
+                width: 10px;
+                height: 38px;
+            }
+
+            .eyes {
+                gap: 15px;
+            }
+
+            .eye {
+                width: 6px;
+                height: 6px;
+            }
+
+            .smile {
+                width: 20px;
+                height: 10px;
+            }
+
+            button {
+                padding: 10px 18px;
+                font-size: 0.85em;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .memory-slot {
+                height: 150px;
+            }
+        }
+
+        .character-container {
+            position: relative;
+            height: 300px;
+            margin: 40px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 100px;
+        }
+
+        .character {
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .character.boy {
+            animation-delay: 0s;
+        }
+
+        .character.girl {
+            animation-delay: 0.5s;
+        }
+
+        .head {
+            width: 80px;
+            height: 80px;
+            background: #fdbcb4;
+            border-radius: 50%;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .boy .head {
+            background: #f4a460;
+        }
+
+        .hair {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 50px;
+            background: #4a2c2a;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .girl .hair {
+            background: #2c1810;
+            height: 60px;
+        }
+
+        .girl .hair::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: -20px;
+            width: 40px;
+            height: 80px;
+            background: #2c1810;
+            border-radius: 0 0 50px 50px;
+        }
+
+        .girl .hair::before {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            right: -20px;
+            width: 40px;
+            height: 80px;
+            background: #2c1810;
+            border-radius: 0 0 50px 50px;
+        }
+
+        .eyes {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .eye {
+            width: 8px;
+            height: 8px;
+            background: #000;
+            border-radius: 50%;
+            animation: blink 4s infinite;
+        }
+
+        .smile {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 15px;
+            border: 3px solid #000;
+            border-top: none;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .body {
+            width: 60px;
+            height: 80px;
+            margin: 0 auto;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .boy .body {
+            background: #4169e1;
+        }
+
+        .girl .body {
+            background: #ff69b4;
+        }
+
+        .arms {
+            position: relative;
+        }
+
+        .arm {
+            position: absolute;
+            width: 15px;
+            height: 60px;
+            border-radius: 10px;
+            top: 10px;
+        }
+
+        .boy .arm {
+            background: #4169e1;
+        }
+
+        .girl .arm {
+            background: #ff69b4;
+        }
+
+        .arm.left {
+            left: -15px;
+            transform-origin: top;
+        }
+
+        .arm.right {
+            right: -15px;
+            transform-origin: top;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff0000;
+            transform: rotate(45deg);
+            animation: heartbeat 1.5s infinite;
+            opacity: 0;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff0000;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 10px;
+            top: 0;
+        }
+
+        /* Page specific animations */
+        .page1 .character.girl {
+            animation: shy 2s ease-in-out infinite;
+        }
+
+        .page2 .character.boy .arm.right {
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        .page2 .heart {
+            opacity: 1;
+            top: -30px;
+            left: 50%;
+        }
+
+        .page3 .character.boy,
+        .page3 .character.girl {
+            animation: float 3s ease-in-out infinite, closer 2s ease-in-out infinite;
+        }
+
+        .page4 .character.girl .arm.right,
+        .page4 .character.boy .arm.left {
+            animation: holdHands 2s ease-in-out infinite;
+        }
+
+        .page5 .character.girl {
+            animation: float 3s ease-in-out infinite, bow 3s ease-in-out infinite;
+        }
+
+        /* Memory upload section */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        .memory-slot {
+            width: 100%;
+            height: 200px;
+            border: 3px dashed #764ba2;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .memory-slot:hover {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .memory-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .memory-slot input {
+            display: none;
+        }
+
+        .upload-text {
+            font-size: 3em;
+            color: #764ba2;
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { height: 8px; }
+            95% { height: 2px; }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: rotate(45deg) scale(1); }
+            50% { transform: rotate(45deg) scale(1.2); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-30deg); }
+        }
+
+        @keyframes shy {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(-5deg); }
+        }
+
+        @keyframes closer {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-10px); }
+        }
+
+        @keyframes holdHands {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(20deg); }
+        }
+
+        @keyframes bow {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(10px) rotateX(10deg); }
+        }
+
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 0, 0, 0.6);
+            transform: rotate(45deg);
+            animation: floatUp 4s infinite;
+        }
+
+        .floating-heart::before,
+        .floating-heart::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 0, 0, 0.6);
+            border-radius: 50%;
+        }
+
+        .floating-heart::before {
+            top: -15px;
+            left: 0;
+        }
+
+        .floating-heart::after {
+            left: 15px;
+            top: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                bottom: -50px;
+                opacity: 1;
+            }
+            100% {
+                bottom: 100%;
+                opacity: 0;
+            }
+        }
+
+        .page-indicator {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            color: white;
+            font-size: 1.2em;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-indicator">Page <span id="currentPage">1</span> of 5</div>
+    
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Page 1 -->
+    <div class="page page1 active">
+        <div class="content-box">
+            <h1>Hi, I'm Saba… and I want to tell you something.</h1>
+            <div class="character-container">
+                <div class="character girl">
+                    <div class="head">
+                        <div class="hair"></div>
+                        <div class="eyes">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="smile"></div>
+                    </div>
+                    <div class="body">
+                        <div class="arms">
+                            <div class="arm left"></div>
+                            <div class="arm right"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                I know I hurt you… and I know my silence might have felt heavy. But today, instead of just saying sorry, I want to tell you our story — in my words, from my heart. 💖<br><br>
+                Because every moment with you is too precious to be left unspoken.
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2 -->
+    <div class="page page2">
+        <div class="content-box">
+            <h1>The Beginning of Us</h1>
+            <div class="character-container">
+                <div class="character boy">
+                    <div class="heart"></div>
+                    <div class="head">
+                        <div class="hair"></div>
+                        <div class="eyes">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="smile"></div>
+                    </div>
+                    <div class="body">
+                        <div class="arms">
+                            <div class="arm left"></div>
+                            <div class="arm right"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="character girl">
+                    <div class="head">
+                        <div class="hair"></div>
+                        <div class="eyes">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="smile"></div>
+                    </div>
+                    <div class="body">
+                        <div class="arms">
+                            <div class="arm left"></div>
+                            <div class="arm right"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                Do you remember the first time we met? It felt like destiny had written something special for me. The way you came into my life was so unexpected… yet it felt so right.<br><br>
+                And then… how can I ever forget the crazy moment when you came to meet me <strong>without even a train ticket</strong>? 😅<br><br>
+                That's when I realized — only someone who truly cares would take such a risk just to see me.
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 3 - Memories -->
+    <div class="page page3">
+        <div class="content-box">
+            <h1>A Box Full of Memories</h1>
+            <div class="character-container">
+                <div class="character boy">
+                    <div class="head">
+                        <div class="hair"></div>
+                        <div class="eyes">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="smile"></div>
+                    </div>
+                    <div class="body">
+                        <div class="arms">
+                            <div class="arm left"></div>
+                            <div class="arm right"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="character girl">
+                    <div class="head">
+                        <div class="hair"></div>
+                        <div class="eyes">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="smile"></div>
+                    </div>
+                    <div class="body">
+                        <div class="arms">
+                            <div class="arm left"></div>
+                            <div class="arm right"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                Every picture, every call, every silly fight, and every laugh — they're all treasures for me. I still replay our moments in my mind when I miss you…<br><br>
+                That time we shared our first inside joke.<br>
+                Those long talks that felt like minutes.<br>
+                The places we visited together, which now feel alive with your presence.<br><br>
+                These memories are my safe space — where it's always us. 💞
+            </div>
+            <div class="memory-grid" id="memoryGrid">
+                <div class="memory-slot" onclick="document.getElementById('upload1').click()">
+                    <span class="upload-text">+</span>
+                    <input type="file" id="upload1" accept="image/*" onchange="loadImage(this, 0)">
+                </div>
+                <div class="memory-slot" onclick="document.getElementById('upload2').click()">
+                    <span class="upload-text">+</span>
+                    <input type="file" id="upload2" accept="image/*" onchange="loadImage(this, 1)">
+                </div>
+                <div class="memory-slot" onclick="document.getElementById('upload3').click()">
+                    <span class="upload-text">+</span>
+                    <input type="file" id="upload3" accept="image/*" onchange="loadImage(this, 2)">
+                </div>
+                <div class="memory-slot" onclick="document.getElementById('upload4').click()">
+                    <span class="upload-text">+</span>
+                    <input type="file" id="upload4" accept="image/*" onchange="loadImage(this, 3)">
+                </div>
+                <div class="memory-slot" onclick="document.getElementById('upload5').click()">
+                    <span class="upload-text">+</span>
+                    <input type="file" id="upload5" accept="image/*" onchange="loadImage(this, 4)">
+                </div>
+                <div class="memory-slot" onclick="document.getElementById('upload6').click()">
+                    <span class="upload-text">+</span>
+                    <input type="file" id="upload6" accept="image/*" onchange="loadImage(this, 5)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 4 -->
+    <div class="page page4">
+        <div class="content-box">
+            <h1>You're My Favorite Chapter</h1>
+            <div class="character-container">
+                <div class="character boy">
+                    <div class="head">
+                        <div class="hair"></div>
+                        <div class="eyes">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="smile"></div>
+                    </div>
+                    <div class="body">
+                        <div class="arms">
+                            <div class="arm left"></div>
+                            <div class="arm right"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="character girl">
+                    <div class="head">
+                        <div class="hair"></div>
+                        <div class="eyes">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="smile"></div>
+                    </div>
+                    <div class="body">
+                        <div class="arms">
+                            <div class="arm left"></div>
+                            <div class="arm right"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                You're not just a part of my life… you are my life's most beautiful chapter.<br><br>
+                Whenever I imagine my future, I see you in it — smiling, laughing, holding my hand. No one else can take that place in my heart.<br><br>
+                You're my peace, my chaos, my everything.
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 5 -->
+    <div class="page page5">
+        <div class="content-box">
+            <h1>From My Heart to Yours</h1>
+            <div class="character-container">
+                <div class="character girl">
+                    <div class="head">
+                        <div class="hair"></div>
+                        <div class="eyes">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="smile"></div>
+                    </div>
+                    <div class="body">
+                        <div class="arms">
+                            <div class="arm left"></div>
+                            <div class="arm right"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                I'm sorry for the times I hurt you. I'm sorry for the silence.<br><br>
+                But I promise you this — I'll always try to be better, to love you more, and never take you for granted.<br><br>
+                This website isn't just words — it's my way of showing that you matter more than my ego, my anger, or my mistakes.<br><br>
+                <strong style="font-size: 1.5em; color: #764ba2;">I love you. Always. 💖</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <button id="prevBtn" onclick="changePage(-1)">← Previous</button>
+        <button id="nextBtn" onclick="changePage(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 5;
+        const images = {};
+
+        function changePage(direction) {
+            const pages = document.querySelectorAll('.page');
+            pages[currentPage - 1].classList.remove('active');
+            
+            currentPage += direction;
+            
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            
+            pages[currentPage - 1].classList.add('active');
+            document.getElementById('currentPage').textContent = currentPage;
+            
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+        }
+
+        function loadImage(input, index) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const slots = document.querySelectorAll('.memory-slot');
+                    slots[index].innerHTML = `<img src="${e.target.result}" alt="Memory ${index + 1}">`;
+                    images[index] = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Create floating hearts
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.getElementById('floatingHearts').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 6000);
+        }
+
+        setInterval(createFloatingHeart, 1000);
+
+        // Initialize
+        document.getElementById('prevBtn').disabled = true;
+    </script>
+</body>
+</html>
